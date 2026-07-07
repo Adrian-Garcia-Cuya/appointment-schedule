@@ -164,7 +164,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ],
               ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               CustomTextFormField(
                 controller: _emailController,
@@ -178,7 +178,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 },
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               FilledButton.tonalIcon(
                 onPressed: isPosting
@@ -192,10 +192,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     ? const Text('Guardando...')
                     : const Text('Guardar cita'),
                 icon: isPosting
-                    ? SizedBox(
+                    ? const SizedBox(
                         width: 18,
                         height: 18,
-                        child: const CircularProgressIndicator(strokeWidth: 2),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : const Icon(Icons.save),
               ),

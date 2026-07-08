@@ -54,14 +54,14 @@ class RegisterAppointmentNotifier extends Notifier<AppointmentModel> {
 
     try {
       final appointmentService = ref.read(appointmentServiceProvider);
-      final mapper = AppointmentMapper.toFirestore(state);
+      final mapper = AppointmentMapper.toJson(state);
       await appointmentService.createAppointment(mapper);
 
       state = state.copyWith(formStatus: FormStatus.success);
       resetForm();
     } catch (e) {
       state = state.copyWith(formStatus: FormStatus.failed);
-      print('[Error]: Error al registrar la cita: ${e.toString()}');
+      debugPrint('[Error]: Error al registrar la cita: ${e.toString()}');
     }
   }
 }

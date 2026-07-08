@@ -1,7 +1,19 @@
-import 'package:book_appointment/infrastructure/services/AppointmentService.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_appointment/config/constants/environment.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:book_appointment/infrastructure/services/appointment.service.dart';
+
+final dioProvider = Provider<Dio>((ref) {
+  return Dio(
+    BaseOptions(
+      baseUrl: Environment.baseUrl,
+      headers: {'Content-Type': 'application/json'},
+    ),
+  );
+});
+
 final appointmentServiceProvider = Provider((ref) {
-  return AppointmentService(FirebaseFirestore.instance);
+  final dio = ref.watch(dioProvider);
+  return AppointmentService(dio);
 });

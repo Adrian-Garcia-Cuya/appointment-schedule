@@ -1,7 +1,7 @@
 import 'package:book_appointment/presentation/providers/appointment/register/register_appointment.model.dart';
 
 class AppointmentMapper {
-  static Map<String, dynamic> toFirestore(AppointmentModel appointment) {
+  static Map<String, dynamic> toJson(AppointmentModel appointment) {
     final selectedDate = appointment.date.value;
     final selectedTime = appointment.time.value;
 
@@ -17,8 +17,7 @@ class AppointmentMapper {
       'title': appointment.title.value,
       'description': appointment.description.value,
       'email': appointment.email.value,
-      'date': combinedDateTime,
-      'createdAt': DateTime.now(),
+      'date': combinedDateTime.toUtc().toIso8601String(),
       'status': 'pending',
     };
   }

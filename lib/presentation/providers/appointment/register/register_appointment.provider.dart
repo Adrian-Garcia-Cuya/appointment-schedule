@@ -14,23 +14,38 @@ class RegisterAppointmentNotifier extends Notifier<AppointmentModel> {
   AppointmentModel build() => const AppointmentModel();
 
   void updateTitle(String value) {
-    state = state.copyWith(title: TitleInput.dirty(value));
+    state = state.copyWith(
+      title: TitleInput.dirty(value),
+      formStatus: FormStatus.invalid,
+    );
   }
 
   void updateDescription(String value) {
-    state = state.copyWith(description: DescriptionInput.dirty(value));
+    state = state.copyWith(
+      description: DescriptionInput.dirty(value),
+      formStatus: FormStatus.invalid,
+    );
   }
 
   void updateDate(DateTime value) {
-    state = state.copyWith(date: DateInput.dirty(value));
+    state = state.copyWith(
+      date: DateInput.dirty(value),
+      formStatus: FormStatus.invalid,
+    );
   }
 
   void updateTime(TimeOfDay value) {
-    state = state.copyWith(time: TimeInput.dirty(value));
+    state = state.copyWith(
+      time: TimeInput.dirty(value),
+      formStatus: FormStatus.invalid,
+    );
   }
 
   void updateEmail(String value) {
-    state = state.copyWith(email: EmailInput.dirty(value));
+    state = state.copyWith(
+      email: EmailInput.dirty(value),
+      formStatus: FormStatus.invalid,
+    );
   }
 
   void resetForm() {

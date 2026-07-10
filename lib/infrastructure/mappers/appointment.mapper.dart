@@ -16,7 +16,7 @@ class AppointmentMapper {
     return {
       'title': appointment.title.value,
       'description': appointment.description.value,
-      'email': appointment.email.value,
+      'emails': appointment.emails.map((e) => e.value).toList(),
       'date': combinedDateTime.toUtc().toIso8601String(),
       'status': 'pending',
     };

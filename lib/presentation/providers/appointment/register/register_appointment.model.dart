@@ -11,7 +11,7 @@ class AppointmentModel with FormzMixin {
   final FormStatus formStatus;
   final TitleInput title;
   final DescriptionInput description;
-  final EmailInput email;
+  final List<EmailInput> emails;
   final DateInput date;
   final TimeInput time;
 
@@ -19,14 +19,20 @@ class AppointmentModel with FormzMixin {
     this.formStatus = FormStatus.invalid,
     this.title = const TitleInput.pure(),
     this.description = const DescriptionInput.pure(),
-    this.email = const EmailInput.pure(),
+    this.emails = const [],
     this.date = const DateInput.pure(),
     this.time = const TimeInput.pure(),
   });
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs {
-    return [title, description, email, date, time];
+    return [
+      title,
+      description,
+      date,
+      time,
+      if (emails.isEmpty) const EmailInput.pure() else ...emails,
+    ];
   }
 
   AppointmentModel copyWith({
@@ -34,6 +40,7 @@ class AppointmentModel with FormzMixin {
     TitleInput? title,
     DescriptionInput? description,
     EmailInput? email,
+    List<EmailInput>? emails,
     DateInput? date,
     TimeInput? time,
   }) {
@@ -41,7 +48,7 @@ class AppointmentModel with FormzMixin {
       formStatus: formStatus ?? this.formStatus,
       title: title ?? this.title,
       description: description ?? this.description,
-      email: email ?? this.email,
+      emails: emails ?? this.emails,
       date: date ?? this.date,
       time: time ?? this.time,
     );

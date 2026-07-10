@@ -1,5 +1,6 @@
 import 'package:book_appointment/presentation/providers/appointment/register/register_appointment.model.dart';
 import 'package:book_appointment/presentation/providers/appointment/register/register_appointment.provider.dart';
+import 'package:book_appointment/presentation/widgets/inputs/custom_input_chip.field.dart';
 import 'package:book_appointment/presentation/widgets/inputs/custom_text_form_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   final _emailController = TextEditingController();
   final _dateController = TextEditingController();
   final _timeController = TextEditingController();
+  final _emailsController = TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +27,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     _emailController.dispose();
     _dateController.dispose();
     _timeController.dispose();
+    _emailsController.dispose();
     super.dispose();
   }
 
@@ -33,7 +36,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     final appointmentModel = ref.watch(registerAppointmentNotifierProvider);
     final title = appointmentModel.title;
     final description = appointmentModel.description;
-    final email = appointmentModel.email;
+    final emails = appointmentModel.emails;
     final date = appointmentModel.date;
     final time = appointmentModel.time;
 
@@ -78,6 +81,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         _emailController.clear();
         _dateController.clear();
         _timeController.clear();
+        _emailsController.clear();
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -102,6 +106,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomTextFormField(
                 controller: _titleController,
@@ -166,15 +171,26 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
               const SizedBox(height: 10),
 
-              CustomTextFormField(
-                controller: _emailController,
-                label: 'Email',
-                hintText: 'Ingresa tu correo electrónico',
-                errorText: email.errorMessage,
-                onChanged: (value) {
+              CustomInputChipField(
+                emails: emails,
+                controller: _emailsController,
+                errorText: (appointmentModel.formStatus == FormStatus.invalid)
+                    ? (emails.isEmpty
+                          ? 'El correo electrónico es requerido'
+                          : (emails.any((e) => !e.isValid)
+                                ? 'Uno o más correos son inválidos'
+                                : null))
+                    : null,
+                onAddEmail: (value) {
                   ref
                       .read(registerAppointmentNotifierProvider.notifier)
-                      .updateEmail(value);
+                      .addEmail(value);
+                  _emailsController.clear();
+                },
+                onRemoveEmail: (index) {
+                  ref
+                      .read(registerAppointmentNotifierProvider.notifier)
+                      .removeEmail(index);
                 },
               ),
 

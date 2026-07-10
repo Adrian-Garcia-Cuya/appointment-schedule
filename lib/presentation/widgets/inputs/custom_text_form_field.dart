@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-
   final String? label;
   final String? hintText;
   final String? errorText;
@@ -14,15 +11,14 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function()? onTap;
   final TextEditingController? controller;
-  
 
   const CustomTextFormField({
-    super.key, 
-    this.label, 
-    this.hintText, 
+    super.key,
+    this.label,
+    this.hintText,
     this.maxLines,
     this.readOnly = false,
-    this.errorText, 
+    this.errorText,
     this.prefixIcon,
     this.onChanged,
     this.validator,
@@ -32,10 +28,7 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
-    );
+    final border = OutlineInputBorder(borderRadius: BorderRadius.circular(15));
 
     return TextFormField(
       readOnly: readOnly,
@@ -46,15 +39,21 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         enabledBorder: border,
-        focusedBorder: border.copyWith(borderSide: const BorderSide(color: Colors.blue)),
-        errorBorder: border.copyWith(borderSide: BorderSide(color: Colors.red.shade800)),
-        focusedErrorBorder: border.copyWith(borderSide: BorderSide(color: Colors.red.shade800)),
+        focusedBorder: border.copyWith(
+          borderSide: const BorderSide(color: Colors.blue),
+        ),
+        errorBorder: border.copyWith(
+          borderSide: BorderSide(color: Colors.red.shade800),
+        ),
+        focusedErrorBorder: border.copyWith(
+          borderSide: BorderSide(color: Colors.red.shade800),
+        ),
         focusColor: Colors.blue,
         isDense: true,
-        label: label != null ? Text(label!): null,
+        label: label != null ? Text(label!) : null,
         hintText: hintText,
         errorText: errorText,
-        prefixIcon: prefixIcon
+        prefixIcon: prefixIcon,
       ),
     );
   }

@@ -48,6 +48,21 @@ class RegisterAppointmentNotifier extends Notifier<AppointmentModel> {
     );
   }
 
+  void addEmail(String value) {
+    state = state.copyWith(
+      emails: [...state.emails, EmailInput.dirty(value)],
+      formStatus: FormStatus.invalid,
+    );
+  }
+
+  void removeEmail(int index) {
+    state.emails.removeAt(index);
+    state = state.copyWith(
+      emails: state.emails,
+      formStatus: FormStatus.invalid,
+    );
+  }
+
   void resetForm() {
     state = const AppointmentModel();
   }
@@ -58,7 +73,7 @@ class RegisterAppointmentNotifier extends Notifier<AppointmentModel> {
         formStatus: FormStatus.invalid,
         title: TitleInput.dirty(state.title.value),
         description: DescriptionInput.dirty(state.description.value),
-        email: EmailInput.dirty(state.email.value),
+        emails: state.emails,
         date: DateInput.dirty(state.date.value),
         time: TimeInput.dirty(state.time.value),
       );
@@ -70,6 +85,7 @@ class RegisterAppointmentNotifier extends Notifier<AppointmentModel> {
     try {
       final appointmentService = ref.read(appointmentServiceProvider);
       final mapper = AppointmentMapper.toJson(state);
+
       await appointmentService.createAppointment(mapper);
 
       state = state.copyWith(formStatus: FormStatus.success);

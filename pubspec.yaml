@@ -39,6 +39,7 @@ dependencies:
   formz: ^0.8.0
   dio: ^5.7.0
   flutter_dotenv: ^6.0.1
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
